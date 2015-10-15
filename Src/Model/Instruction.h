@@ -2,26 +2,23 @@
 #define INSTRUCTION_H
 
 #include "Configuration.h"
-#include <string>
+#include <vector>
 
 namespace Model
 {
     class Instruction
     {
     public:
-        Instruction(const char* mnemonic, WORD byte_code) :
-            ByteCode(byte_code)
-        {
-            strcpy(Mnemonic, mnemonic);
-        }
+        Instruction(const char* mnemonic, WORD byte_code);
 
-        ~Instruction() {}
-
+        ~Instruction();
 
         static const int MAX_MONIC_LENGTH = 5;
         char Mnemonic[MAX_MONIC_LENGTH];
         WORD ByteCode;
     };
+
+    typedef std::vector<Instruction> InstructionSet;
 }
 
 #endif /*INSTRUCTION_H*/

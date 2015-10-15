@@ -143,12 +143,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Src\MachineService.cpp" />
     <ClCompile Include="Src\main.cpp" />
+    <ClCompile Include="Src\Model\Instruction.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Consts\Configuration.h" />
+    <ClInclude Include="Src\MachineService.h" />
     <ClInclude Include="Src\Model\Instruction.h" />
+    <ClInclude Include="Src\Model\Machine.h" />
+    <ClInclude Include="Src\Model\Memory.h" />
     <ClInclude Include="Src\Model\Register.h" />
+    <ClInclude Include="Src\OpCodes.h" />
+    <ClInclude Include="Src\SimpleMnemonic.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Test\TestInput.as" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
