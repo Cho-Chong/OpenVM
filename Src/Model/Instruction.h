@@ -2,6 +2,7 @@
 #define INSTRUCTION_H
 
 #include "Configuration.h"
+#include "OpCodes.h"
 #include <vector>
 
 namespace Model
@@ -9,13 +10,13 @@ namespace Model
     class Instruction
     {
     public:
-        Instruction(const char* mnemonic, WORD byte_code);
+        Instruction(const char* mnemonic, OPCODE_ENUM byte_code);
 
         ~Instruction();
 
         static const int MAX_MONIC_LENGTH = 5;
         char Mnemonic[MAX_MONIC_LENGTH];
-        WORD ByteCode;
+        OPCODE_ENUM ByteCode;
     };
 
     typedef std::vector<Instruction> InstructionSet;

@@ -3,7 +3,7 @@
 
 namespace Service
 {
-    MachineService::MachineService() :
+    MachineService::MachineService()
     {
     }
 
@@ -75,4 +75,8 @@ namespace Service
             } break;
         }
     }
+
+
+
+    
 }

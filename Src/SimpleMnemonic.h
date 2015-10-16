@@ -5,11 +5,14 @@
 #include "Instruction.h"
 #include "OpCodes.h"
 
+
+//TODO: awkwardly floating out in ether
 static const Model::Instruction MOV("MOV", OP_MOV);
 
 static const Model::Instruction INC("INC", OP_INC);
 
-std::vector<Model::Instruction> InstructionSet =
+//TODO: make a map with the assembly name as key?
+static const std::vector<Model::Instruction> SIMPLE_INSTRUCTION_SET =
 {
     MOV,
     INC

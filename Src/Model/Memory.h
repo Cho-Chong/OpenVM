@@ -2,7 +2,6 @@
 #define MEMORY_H
 
 #include "Configuration.h"
-
 namespace Model
 {
     template <int MAX_SIZE>

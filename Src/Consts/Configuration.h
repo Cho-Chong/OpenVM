@@ -1,9 +1,14 @@
 #ifndef CONFIGURATION_H
 #define CONFIGURATION_H
 
+#include <vector>
 
 // define as 16-bit address and data
 typedef unsigned short WORD;
+
+typedef std::vector<WORD> WORDS;
+
+typedef std::vector<char*> ASSEMBLY;
 
 typedef unsigned short ADDRESS;
 

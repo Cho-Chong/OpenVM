@@ -17,10 +17,11 @@ namespace Service
 
     private:
         // TODO: would be nice to inject the machine
-        static Model::Machine machine;
-        static WORD Fetch();
-        static void Decode(const WORD& instruction);
-        static void Evaluate(const WORD& instruction);
+        Model::Machine machine;
+
+        WORD Fetch();
+        void Decode(const WORD& instruction);
+        void Evaluate(const WORD& instruction);
     };
 }
 

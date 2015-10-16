@@ -1,1 +1,3 @@
-PUT 20, R1
+PUT R1, 20
+INC R1
+MOV R1, A
