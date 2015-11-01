@@ -18,13 +18,7 @@
     <ClCompile Include="Src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Src\MachineService.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Src\Model\Instruction.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\AssemblyParser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Src\Model\OpCode.cpp">
@@ -36,7 +30,13 @@
     <ClCompile Include="Src\Model\Machine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Src\ProgramParser.cpp">
+    <ClCompile Include="Src\Service\MachineService.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Service\AssemblyParser.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Service\ProgramParser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -56,13 +56,7 @@
     <ClInclude Include="Src\Model\Memory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Src\MachineService.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Src\Model\Machine.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\AssemblyParser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Src\Model\OpCodes.h">
@@ -74,7 +68,16 @@
     <ClInclude Include="Src\targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Src\ProgramParser.h">
+    <ClInclude Include="Src\Service\MachineService.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Service\AssemblyParser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Service\DebugService.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Service\ProgramParser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

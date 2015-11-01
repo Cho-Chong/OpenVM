@@ -31,26 +31,26 @@ namespace Service
                 //HACK: HACKITY HACK
                 char temp[50];
                 strcpy(temp, line);
-                char* argument = strtok(temp, " ");
+                auto argument = strtok(temp, " ");
 
                 // TODO: support bin/hex/ASCII formats (0xAA, b1010101010101010, #'4)
-                OPCODE_ENUM base_op_code = ParseInstruction(argument);
-                int num_arguments = Model::OpCode::GetNumArguments(base_op_code);
+                auto base_op_code = ParseInstruction(argument);
+                auto num_arguments = Model::OpCode::GetNumArguments(base_op_code);
 
                 if (num_arguments >= 1)
                 {
-                    argument = strtok(NULL, " ");
+                    argument = strtok(temp, " ");
                     //TODO: get rid of comma
-                    int register_index = ParseRegister(argument);
+                    auto register_index = ParseRegister(argument);
 
-                    WORD op_code = Model::OpCode::GetOpCode(base_op_code, register_index);
-                    memory.PushWord(byte_address++, op_code);
+                    auto op_code = Model::OpCode::GetOpCode(base_op_code, register_index);
+                    memory.SetValue(byte_address++, op_code);
 
                     if (num_arguments >= 2)
                     {
-                        argument = strtok(NULL, " ");
-                        WORD value = ParseRegValue(argument);
-                        memory.PushWord(byte_address++, value);
+                        argument = strtok(temp, " ");
+                        auto value = ParseRegValue(argument);
+                        memory.SetValue(byte_address++, value);
 
                     }
 
@@ -58,8 +58,7 @@ namespace Service
                 }
                 else
                 {
-                    memory.PushWord(byte_address++, base_op_code);
-
+                    memory.SetValue(byte_address++, base_op_code);
                 }
                 
                 line_number++;
@@ -71,8 +70,7 @@ namespace Service
     {
         OPCODE_ENUM matched_instruction = OP_ERROR;
 
-        //TODO: be nice to inject the instruction set we want to use
-        for (auto instruction : SIMPLE_INSTRUCTION_SET)
+        for (auto instruction : *InstructionSet)
         {
             if (strcmp(instruction.Mnemonic, inst) == 0)
             {

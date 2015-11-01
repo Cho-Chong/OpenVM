@@ -14,12 +14,12 @@ namespace Model
         }
         ~Memory() {}
 
-        WORD GetValues(ADDRESS address)
+        WORD GetValue(ADDRESS address)
         {
             return Words[address];
         }
 
-        void PushWord(ADDRESS address, WORD word)
+        void SetValue(ADDRESS address, WORD word)
         {
             if (address < MaxSize)
             {
@@ -31,6 +31,7 @@ namespace Model
             }
         }
 
+    private:
         unsigned int MaxSize;
         WORDS_MAP Words;
     };

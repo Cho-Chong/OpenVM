@@ -19,8 +19,8 @@ namespace Service
         Model::Machine* Machine;
 
         WORD Fetch();
-        void Decode(const WORD& instruction);
-        void Evaluate(const WORD& instruction);
+        OPCODE_ENUM Decode(const WORD& instruction);
+        void Evaluate(const OPCODE_ENUM& instruction);
     };
 }
 

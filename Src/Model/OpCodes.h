@@ -29,7 +29,7 @@ namespace Model
 
         static WORD GetOpCode(OPCODE_ENUM op_code, int register_index);
 
-        static WORD GetBaseOpCode(WORD op_code);
+        static OPCODE_ENUM GetBaseOpCode(WORD op_code);
 
         static int GetNumArguments(OPCODE_ENUM op_code);
     private:

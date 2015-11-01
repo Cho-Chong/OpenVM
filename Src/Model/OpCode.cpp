@@ -29,7 +29,7 @@ namespace Model
         return op_code;
     }
 
-    WORD OpCode::GetBaseOpCode(WORD op_code)
+    OPCODE_ENUM OpCode::GetBaseOpCode(WORD op_code)
     {
         return OP_ERROR;
     }

@@ -17,8 +17,12 @@ namespace Model
         Memory Data;
         //TODO: do registers/accumulators reside in memory or is it special hardware?
         Register Registers[NUM_REGISTERS];
-        Register Accumulator;
-        Register ProgramCounter;
+        Register Acc;  //accumulator
+        Register PC;   //program counter
+        Register IR;   //instruction register
+        Register MAR;  //memory address register
+        Register MDR;  //memory data register
+
     };
 }
 

@@ -88,7 +88,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)\src;$(ProjectDir)\src\Consts;$(ProjectDir)\src\Model;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\src\service;$(ProjectDir)\src;$(ProjectDir)\src\Consts;$(ProjectDir)\src\Model;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalUsingDirectories>%(AdditionalUsingDirectories)</AdditionalUsingDirectories>
     </ClCompile>
     <Link>
@@ -144,25 +144,26 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Src\AssemblyParser.cpp" />
-    <ClCompile Include="Src\MachineService.cpp" />
+    <ClCompile Include="Src\Service\AssemblyParser.cpp" />
+    <ClCompile Include="Src\Service\MachineService.cpp" />
     <ClCompile Include="Src\main.cpp" />
     <ClCompile Include="Src\Model\Instruction.cpp" />
     <ClCompile Include="Src\Model\Machine.cpp" />
     <ClCompile Include="Src\Model\OpCode.cpp" />
-    <ClCompile Include="Src\ProgramParser.cpp" />
+    <ClCompile Include="Src\Service\ProgramParser.cpp" />
     <ClCompile Include="Src\stdafx.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Src\AssemblyParser.h" />
+    <ClInclude Include="Src\Service\AssemblyParser.h" />
     <ClInclude Include="Src\Consts\Configuration.h" />
-    <ClInclude Include="Src\MachineService.h" />
+    <ClInclude Include="Src\Service\DebugService.h" />
+    <ClInclude Include="Src\Service\MachineService.h" />
     <ClInclude Include="Src\Model\Instruction.h" />
     <ClInclude Include="Src\Model\Machine.h" />
     <ClInclude Include="Src\Model\Memory.h" />
     <ClInclude Include="Src\Model\Register.h" />
     <ClInclude Include="Src\Model\OpCodes.h" />
-    <ClInclude Include="Src\ProgramParser.h" />
+    <ClInclude Include="Src\Service\ProgramParser.h" />
     <ClInclude Include="Src\SimpleMnemonic.h" />
     <ClInclude Include="Src\stdafx.h" />
     <ClInclude Include="Src\targetver.h" />
