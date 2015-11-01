@@ -23,7 +23,13 @@ namespace OpenVMTest
             assembly.push_back("INC R1");
             //assembly.push_back("MOV R1, A");
 
-            subject.Parse(assembly);
+            WORDS byte_codes = subject.Parse(assembly);
+            /* expected byte code
+            0x0000 0x39 0x14
+            0x0002 0x09
+            0x0003 0x39
+            */
+            Assert::IsTrue(byte_codes[0] == 0);
         }
 
         //TODO: lower level unit tests

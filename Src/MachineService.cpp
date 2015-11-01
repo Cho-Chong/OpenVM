@@ -3,7 +3,7 @@
 
 namespace Service
 {
-    MachineService::MachineService()
+    MachineService::MachineService(Model::Machine* machine) : Machine(machine)
     {
     }
 
@@ -25,7 +25,7 @@ namespace Service
 
     WORD MachineService::Fetch()
     {
-        return machine.Program.GetValue(machine.ProgramCounter.value++);
+        return Machine->Program.GetValues(Machine->ProgramCounter.value++);
     }
 
     void MachineService::Decode(const WORD& instruction)
@@ -35,45 +35,45 @@ namespace Service
 
     void MachineService::Evaluate(const WORD& instruction)
     {
-        switch (instruction)
-        {
-            case OP_NOP:
+            switch (instruction)
             {
+                case OP_NOP:
+                {
 
-            } break;
-            case OP_INC:
-            {
+                } break;
+                case OP_INC:
+                {
 
-            } break;
-            case OP_DEC:
-            {
+                } break;
+                case OP_DEC:
+                {
 
-            } break;
-            case OP_ADD:
-            {
+                } break;
+                case OP_ADD:
+                {
 
-            } break;
-            case OP_SUB:
-            {
+                } break;
+                case OP_SUB:
+                {
 
-            } break;
-            case OP_CALL:
-            {
+                } break;
+                case OP_CALL:
+                {
 
-            } break;
-            case OP_JMP:
-            {
+                } break;
+                case OP_JMP:
+                {
 
-            } break;
-            case OP_MOV:
-            {
+                } break;
+                case OP_MOV:
+                {
 
-            } break;
-            default:
-            {
+                } break;
+                default:
+                {
 
-            } break;
-        }
+                } break;
+            }
     }
 
 

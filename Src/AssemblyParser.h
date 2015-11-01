@@ -3,18 +3,23 @@
 
 #include "Configuration.h"
 #include "OpCodes.h"
+#include "Instruction.h"
+#include "Memory.h"
 
 namespace Service
 {
     class AssemblyParser
     {
     public:
-        AssemblyParser();
+        AssemblyParser(std::vector<Model::Instruction> *inst_set);
         ~AssemblyParser();
 
-        WORDS Parse(const ASSEMBLY &assembly);
+        //TODO: # params getting out of hand
+        void Parse(const ASSEMBLY &assembly, ADDRESS start_addr, Model::Memory &memory, PROGRAM_ASSEMBLY_MAP &program_map);
 
     private:
+        std::vector<Model::Instruction>* InstructionSet;
+
         OPCODE_ENUM ParseInstruction(const char* inst);
 
         int ParseRegister(const char* line);

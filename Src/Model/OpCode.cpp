@@ -19,9 +19,7 @@ namespace Model
     {
         WORD max_op_code = NUM_OP_CODES * NUM_REGISTERS;
         WORD min_op_code = OP_CODE_START;
-
-        WORD op_code = (base_op_code * NUM_REGISTERS);
-        op_code += register_index;
+        WORD op_code = (base_op_code * NUM_REGISTERS) + register_index;
 
         if (op_code <= min_op_code || op_code >= max_op_code)
         {
@@ -38,6 +36,7 @@ namespace Model
 
     int OpCode::GetNumArguments(OPCODE_ENUM op_code)
     {
+        //TODO: kinda don't like this
         static const std::map<OPCODE_ENUM, int> OPCODE_ARGUMENTS_MAP = 
         {
             {OP_NOP, 0},

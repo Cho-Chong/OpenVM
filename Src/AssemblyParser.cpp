@@ -1,12 +1,13 @@
 #include "stdafx.h"
 #include "AssemblyParser.h"
 #include "SimpleMnemonic.h"
+#include "Memory.h"
 
 namespace Service
 {
-    AssemblyParser::AssemblyParser()
+    AssemblyParser::AssemblyParser(std::vector<Model::Instruction> *inst_set)
     {
-
+        InstructionSet = inst_set;
     }
 
     AssemblyParser::~AssemblyParser()
@@ -14,15 +15,18 @@ namespace Service
 
     }
 
-    WORDS AssemblyParser::Parse(const ASSEMBLY &assembly)
+    void AssemblyParser::Parse(const ASSEMBLY &assembly, ADDRESS start_addr, Model::Memory &memory, PROGRAM_ASSEMBLY_MAP &program_map)
     {
-        WORDS byte_code;
+        ADDRESS byte_address = start_addr;
+        unsigned int line_number = 0;
 
-
-        for (auto line : assembly)
+        for (auto line : assembly) 
         {
             if (line != NULL)
             {
+                //TODO: perhaps use this for a sort of debugger in order to step through assembly
+                program_map[line_number] = byte_address;
+
                 //TODO: what about comments?
                 //HACK: HACKITY HACK
                 char temp[50];
@@ -40,31 +44,27 @@ namespace Service
                     int register_index = ParseRegister(argument);
 
                     WORD op_code = Model::OpCode::GetOpCode(base_op_code, register_index);
-                    byte_code.push_back(op_code);
+                    memory.PushWord(byte_address++, op_code);
 
                     if (num_arguments >= 2)
                     {
                         argument = strtok(NULL, " ");
                         WORD value = ParseRegValue(argument);
-                        byte_code.push_back(value);
+                        memory.PushWord(byte_address++, value);
+
                     }
 
                     //TODO: what if more arguments? i.e. what about inline comments
                 }
                 else
                 {
-                    byte_code.push_back(base_op_code);
+                    memory.PushWord(byte_address++, base_op_code);
+
                 }
+                
+                line_number++;
             }
-
-            /* expected byte code
-            0x0000 0x39 0x14
-            0x0002 0x09
-            0x0003 0x39
-            */
         }
-
-        return byte_code;
     }
 
     OPCODE_ENUM AssemblyParser::ParseInstruction(const char* inst)

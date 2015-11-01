@@ -9,15 +9,14 @@ namespace Service
     class MachineService
     {
     public:
-        MachineService();
+        MachineService(Model::Machine* machine);
         ~MachineService();
 
         void Initialize();
         void Execute();
 
     private:
-        // TODO: would be nice to inject the machine
-        Model::Machine machine;
+        Model::Machine* Machine;
 
         WORD Fetch();
         void Decode(const WORD& instruction);

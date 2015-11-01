@@ -2,22 +2,37 @@
 #define MEMORY_H
 
 #include "Configuration.h"
+
 namespace Model
 {
-    template <int MAX_SIZE>
     class Memory
     {
     public:
-        Memory() {}
+        Memory(unsigned int max_size)  : MaxSize(max_size)
+        {
+            
+        }
         ~Memory() {}
 
-        WORD GetValue(ADDRESS address)
+        WORD GetValues(ADDRESS address)
         {
-            return 0;
+            return Words[address];
         }
 
-        ADDRESS startingAddress;
-        WORD values[MAX_SIZE];
+        void PushWord(ADDRESS address, WORD word)
+        {
+            if (address < MaxSize)
+            {
+                Words[address] = word;
+            }
+            else
+            {
+                
+            }
+        }
+
+        unsigned int MaxSize;
+        WORDS_MAP Words;
     };
 }
 
