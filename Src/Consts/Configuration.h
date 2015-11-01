@@ -20,6 +20,10 @@ static const int MAX_CODE_SIZE = 0x2000;
 
 static const int MAX_DATA_SIZE = 0x2000;
 
+static const ADDRESS CODE_START_ADDRESS = 0x0000;
+
+static const ADDRESS DATA_START_ADDRESS = CODE_START_ADDRESS + MAX_CODE_SIZE;
+
 static const int NUM_REGISTERS = 8;
 
 #endif /*CONFIGURATION_H*/

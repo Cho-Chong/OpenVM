@@ -145,6 +145,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Src\Service\AssemblyParser.cpp" />
+    <ClCompile Include="Src\Service\DebugService.cpp" />
     <ClCompile Include="Src\Service\MachineService.cpp" />
     <ClCompile Include="Src\main.cpp" />
     <ClCompile Include="Src\Model\Instruction.cpp" />
@@ -154,6 +155,7 @@
     <ClCompile Include="Src\stdafx.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Src\Model\Breakpoint.h" />
     <ClInclude Include="Src\Service\AssemblyParser.h" />
     <ClInclude Include="Src\Consts\Configuration.h" />
     <ClInclude Include="Src\Service\DebugService.h" />
@@ -164,7 +166,7 @@
     <ClInclude Include="Src\Model\Register.h" />
     <ClInclude Include="Src\Model\OpCodes.h" />
     <ClInclude Include="Src\Service\ProgramParser.h" />
-    <ClInclude Include="Src\SimpleMnemonic.h" />
+    <ClInclude Include="Src\Consts\SimpleMnemonic.h" />
     <ClInclude Include="Src\stdafx.h" />
     <ClInclude Include="Src\targetver.h" />
   </ItemGroup>

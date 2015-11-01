@@ -15,9 +15,9 @@ namespace Service
 
     }
 
-    void AssemblyParser::Parse(const ASSEMBLY &assembly, ADDRESS start_addr, Model::Memory &memory, PROGRAM_ASSEMBLY_MAP &program_map)
+    void AssemblyParser::Parse(const ASSEMBLY &assembly, Model::Memory &memory, PROGRAM_ASSEMBLY_MAP &program_map)
     {
-        ADDRESS byte_address = start_addr;
+        ADDRESS byte_address = memory.GetTopAddress();
         unsigned int line_number = 0;
 
         for (auto line : assembly) 

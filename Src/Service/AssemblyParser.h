@@ -15,7 +15,7 @@ namespace Service
         ~AssemblyParser();
 
         //TODO: # params getting out of hand
-        void Parse(const ASSEMBLY &assembly, ADDRESS start_addr, Model::Memory &memory, PROGRAM_ASSEMBLY_MAP &program_map);
+        void Parse(const ASSEMBLY &assembly, Model::Memory &memory, PROGRAM_ASSEMBLY_MAP &program_map);
 
     private:
         std::vector<Model::Instruction>* InstructionSet;

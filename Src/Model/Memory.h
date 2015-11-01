@@ -8,7 +8,9 @@ namespace Model
     class Memory
     {
     public:
-        Memory(unsigned int max_size)  : MaxSize(max_size)
+        Memory(unsigned int max_size, ADDRESS top_address)  : 
+            MaxSize(max_size),
+            TopAddress(top_address)
         {
             
         }
@@ -31,7 +33,13 @@ namespace Model
             }
         }
 
+        ADDRESS GetTopAddress()
+        {
+            return TopAddress;
+        }
+
     private:
+        ADDRESS TopAddress;
         unsigned int MaxSize;
         WORDS_MAP Words;
     };

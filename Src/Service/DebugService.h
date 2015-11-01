@@ -2,6 +2,7 @@
 #define DEBUGSERVICE_H
 
 #include "Configuration.h"
+#include "Breakpoint.h"
 
 namespace Service
 {
@@ -17,7 +18,8 @@ namespace Service
         void RunTo();
         void SetBreakpoint();
 
-        PROGRAM_ASSEMBLY_MAP debuggerMap;
+        PROGRAM_ASSEMBLY_MAP DebuggerMap;
+        std::vector<Model::BreakPoint> BreakPoints;
     };
 }
 

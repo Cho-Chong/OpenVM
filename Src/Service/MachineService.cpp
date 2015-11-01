@@ -25,7 +25,7 @@ namespace Service
 
     WORD MachineService::Fetch()
     {
-        return Machine->Program.GetValue(Machine->PC.value++);
+        return Machine->Program->GetValue(Machine->PC.value++);
     }
 
     OPCODE_ENUM MachineService::Decode(const WORD& instruction)

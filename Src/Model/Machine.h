@@ -10,11 +10,11 @@ namespace Model
     class Machine
     {
     public:
-        Machine(unsigned int max_code_size, unsigned int max_data_size);
+        Machine(Memory* program, Memory* data);
         ~Machine();
 
-        Memory Program;
-        Memory Data;
+        Memory* Program;
+        Memory* Data;
         //TODO: do registers/accumulators reside in memory or is it special hardware?
         Register Registers[NUM_REGISTERS];
         Register Acc;  //accumulator

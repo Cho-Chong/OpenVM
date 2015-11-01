@@ -1,3 +1,4 @@
+#include <fstream>
 #include "ProgramParser.h"
 
 namespace Service
@@ -15,7 +16,10 @@ namespace Service
     ASSEMBLY ProgramParser::Parse(const char* file)
     {
         ASSEMBLY assembly;
+        std::ifstream in;
 
+        in.open(file);
+        
         return assembly;
     }
 
