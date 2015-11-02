@@ -93,4 +93,7 @@
   <ItemGroup>
     <None Include="Test\TestInput.as" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="Src\test.txt" />
+  </ItemGroup>
 </Project>

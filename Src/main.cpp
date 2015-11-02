@@ -24,11 +24,9 @@ void Run();
 
 int main()
 {
-    Compile("C:\\Users\\Hero\\Documents\\Visual Studio 2015\\Projects\\OpenVM\\OpenVM\\Src\\test.txt");
+    Compile("C:\\Users\\Spam\\Documents\\Visual Studio 2015\\Projects\\OpenVM\\OpenVM\\Src\\test.txt");
     Run();
-    Run();
-    Run();
-    Run();
+    system("PAUSE");
     return 0;
 }
 

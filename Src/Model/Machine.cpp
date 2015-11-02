@@ -24,6 +24,8 @@ namespace Model
 
     void Machine::Print()
     {
+        printf("SP: %d, PC: %d, ACC: %d\n", Sp.value, PC.value, Acc.value);
+
         // print the program memory
         // print the register contents
         for (int index = 0; index < NUM_REGISTERS; index++)

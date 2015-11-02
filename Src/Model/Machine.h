@@ -4,6 +4,7 @@
 #include "Configuration.h"
 #include "Register.h"
 #include "Memory.h"
+#include <stack>
 
 namespace Model
 {
@@ -19,11 +20,13 @@ namespace Model
         Memory* Data;
         //TODO: do registers/accumulators reside in memory or is it special hardware?
         Register Registers[NUM_REGISTERS];
+        Register Sp;   //stack pointer
         Register Acc;  //accumulator
         Register PC;   //program counter
         Register IR;   //instruction register
         Register MAR;  //memory address register
         Register MDR;  //memory data register
+        std::stack<ADDRESS> stack;
 
     };
 }

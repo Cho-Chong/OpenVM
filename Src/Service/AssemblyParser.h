@@ -25,6 +25,10 @@ namespace Service
         WORD ParseRegister(const std::string& token);
 
         WORD ParseRegValue(const std::string& token);
+
+        void ParseTags();
+
+        void ParseSubroutines();
     };
 }
 

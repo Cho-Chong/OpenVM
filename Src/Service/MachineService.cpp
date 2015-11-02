@@ -30,7 +30,14 @@ namespace Service
     {
         Machine->Print();
         WORD instruction = Fetch();
-        Evaluate(instruction);
+
+        do
+        {
+            instruction = Fetch();
+            Evaluate(instruction);
+            Machine->Print();
+        } while (instruction != OP_END);
+
     }
 
     WORD MachineService::Fetch()

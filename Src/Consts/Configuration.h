@@ -18,6 +18,8 @@ typedef enum
     OP_MOV,     // 7
     OP_ACC,
     OP_REG,
+    OP_BEGIN,
+    OP_END,
     OP_ERROR,
     NUM_OP_CODES
 } OPCODE_ENUM;

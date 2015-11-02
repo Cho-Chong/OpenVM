@@ -10,6 +10,9 @@ namespace Service
 {
     static const WORD BAD_REGISTER_INDEX = -1;
     static const std::string COMMENT_BEGIN = "#";
+    static const std::string PROGRAM_BEGIN = "BEGIN";
+    static const std::string PROGRAM_END = "END";
+    static const std::string ROUTINE_RET = "RET";
 
     AssemblyParser::AssemblyParser(MNEUMONIC_MAP *inst_set)
     {
@@ -25,19 +28,36 @@ namespace Service
     {
         ADDRESS byte_address = memory.GetTopAddress();
         unsigned int line_number = 0;
+        bool found_begin = false;
+        bool found_end = false;
 
         for (auto line : assembly) 
         {
-            if (!line.empty())
+            line_number++;
+
+            if (line == PROGRAM_BEGIN && !found_begin)
+            {
+                found_begin = true;
+                memory.SetValue(byte_address++, OP_BEGIN);
+            }
+            else if (line == PROGRAM_END && !found_end)
+            {
+                found_end = true;
+                memory.SetValue(byte_address++, OP_END);
+            }
+            else if (found_begin && !line.empty())
             {
                 std::istringstream strstream(line);
                 std::string token;
                 std::getline(strstream, token, ' ');
 
-                //TODO: what about tags
+                //TODO: tags are any strings (a-z, A-Z, ending with :)
+                //Tags must be defined before use
+
+                //TODO: subroutines are blocks beginning with a tag and ending with ROUTINE_RET
+
                 if (token.substr(0,1) == COMMENT_BEGIN)
                 {
-                    line_number++;
                     continue;
                 }
                 else
@@ -69,10 +89,7 @@ namespace Service
                     {
                         memory.SetValue(byte_address++, base_op_code);
                     }
-
-                    line_number++;
                 }
-                
             }
         }
     }
@@ -118,5 +135,17 @@ namespace Service
         }
         // TODO: support bin/hex/ASCII formats (0xAA, b1010101010101010
         return reg_index;
+    }
+
+    void AssemblyParser::ParseTags()
+    {
+        // is it a tag?
+        // if its a tag, map this tag to the current byte address
+    }
+
+    void AssemblyParser::ParseSubroutines()
+    {
+        // is it a subroutine?
+        // if its a subroutine, map its tag to the current byte address
     }
 }
