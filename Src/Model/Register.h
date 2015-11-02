@@ -8,7 +8,12 @@ namespace Model
     class Register
     {
     public:
-        Register() {}
+        Register()
+        {
+            index = 0;
+            value = 0;
+        }
+
         ~Register() {}
 
         unsigned int index;

@@ -27,6 +27,8 @@ int main()
     Compile("C:\\Users\\Hero\\Documents\\Visual Studio 2015\\Projects\\OpenVM\\OpenVM\\Src\\test.txt");
     Run();
     Run();
+    Run();
+    Run();
     return 0;
 }
 

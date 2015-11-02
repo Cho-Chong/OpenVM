@@ -28,6 +28,7 @@ namespace Service
 
     void MachineService::Execute()
     {
+        Machine->Print();
         WORD instruction = Fetch();
         Evaluate(instruction);
     }

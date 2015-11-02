@@ -13,6 +13,8 @@ namespace Model
         Machine(Memory* program, Memory* data);
         ~Machine();
 
+        void Print();
+
         Memory* Program;
         Memory* Data;
         //TODO: do registers/accumulators reside in memory or is it special hardware?
