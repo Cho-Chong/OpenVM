@@ -3,21 +3,7 @@
 
 #include "Configuration.h"
 
-//TODO: how to handle instructions for different registers?
-//8051 makes each opcode + register as an offset value
-typedef enum
-{
-    OP_NOP = 0, // 0 
-    OP_INC,     // 1
-    OP_DEC,     // 2
-    OP_JMP,     // 3
-    OP_CALL,    // 4
-    OP_ADD,     // 5
-    OP_SUB,     // 6
-    OP_MOV,     // 7
-    OP_ERROR,
-    NUM_OP_CODES
-} OPCODE_ENUM;
+
 
 namespace Model
 {

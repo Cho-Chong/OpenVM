@@ -10,7 +10,7 @@ namespace Service
     public:
         ProgramParser();
         ~ProgramParser();
-        ASSEMBLY Parse(const char* file);
+        ASSEMBLY Parse(const std::string& file);
 
     private:
 

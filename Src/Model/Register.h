@@ -11,7 +11,7 @@ namespace Model
         Register() {}
         ~Register() {}
 
-        ADDRESS address;
+        unsigned int index;
         WORD value;
     };
 }

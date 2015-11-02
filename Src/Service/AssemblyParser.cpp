@@ -1,11 +1,15 @@
 #include "stdafx.h"
+#include <iostream>
+#include <string>
+#include <sstream>
 #include "AssemblyParser.h"
 #include "SimpleMnemonic.h"
 #include "Memory.h"
 
 namespace Service
 {
-    AssemblyParser::AssemblyParser(std::vector<Model::Instruction> *inst_set)
+    static const WORD BAD_REGISTER_INDEX = -1;
+    AssemblyParser::AssemblyParser(MNEUMONIC_MAP *inst_set)
     {
         InstructionSet = inst_set;
     }
@@ -22,36 +26,32 @@ namespace Service
 
         for (auto line : assembly) 
         {
-            if (line != NULL)
+            if (!line.empty())
             {
                 //TODO: perhaps use this for a sort of debugger in order to step through assembly
                 program_map[line_number] = byte_address;
 
-                //TODO: what about comments?
-                //HACK: HACKITY HACK
-                char temp[50];
-                strcpy(temp, line);
-                auto argument = strtok(temp, " ");
+                std::istringstream strstream(line);
+                std::string token;
+                std::getline(strstream, token, ' ');
 
-                // TODO: support bin/hex/ASCII formats (0xAA, b1010101010101010, #'4)
-                auto base_op_code = ParseInstruction(argument);
+                auto base_op_code = ParseInstruction(token);
                 auto num_arguments = Model::OpCode::GetNumArguments(base_op_code);
 
                 if (num_arguments >= 1)
                 {
-                    argument = strtok(temp, " ");
+                    std::getline(strstream, token, ' ');
                     //TODO: get rid of comma
-                    auto register_index = ParseRegister(argument);
+                    auto register_index = ParseRegister(token);
 
                     auto op_code = Model::OpCode::GetOpCode(base_op_code, register_index);
                     memory.SetValue(byte_address++, op_code);
 
                     if (num_arguments >= 2)
                     {
-                        argument = strtok(temp, " ");
-                        auto value = ParseRegValue(argument);
+                        std::getline(strstream, token, ' ');
+                        auto value = ParseRegValue(token);
                         memory.SetValue(byte_address++, value);
-
                     }
 
                     //TODO: what if more arguments? i.e. what about inline comments
@@ -66,57 +66,45 @@ namespace Service
         }
     }
 
-    OPCODE_ENUM AssemblyParser::ParseInstruction(const char* inst)
+    OPCODE_ENUM AssemblyParser::ParseInstruction(const std::string& token)
     {
-        OPCODE_ENUM matched_instruction = OP_ERROR;
-
-        for (auto instruction : *InstructionSet)
-        {
-            if (strcmp(instruction.Mnemonic, inst) == 0)
-            {
-                matched_instruction = instruction.ByteCode;
-                //TODO: dirty
-                break;
-            }
-        }
-
-        return matched_instruction;
+        return (*InstructionSet)[token];
     }
 
-    int AssemblyParser::ParseRegister(const char* reg)
+    WORD AssemblyParser::ParseRegister(const std::string& token)
     {
-        int reg_len = strlen(reg);
-        int register_index = 0;
+        auto reg_op = (*InstructionSet)[token.substr(0,1)];
+        WORD register_index = 0;
 
-        //HACK: hackish, magicalish
-        if (reg_len == 1) // must be accumulator
+        //TODO: would be nice to use a regex?
+        if (reg_op == OP_ACC)
         {
-            return 0;
+            register_index = 0;
         }
-        else // normal register
+        else if(reg_op == OP_REG)
         {
-            // i.e. "R1," or "R11,"
-            if (reg_len >= 3)
-            {
-                //TODO: SO MUCH MAGIC
-                int start_ic = 1;
-                int end_ic = reg_len - 1;
-                char int_buf[2] = "0";
+            std::istringstream strstream( token.substr(1, token.length()) );
+            std::string subtoken;
+            std::getline(strstream, subtoken, ',');
 
-                for (int ic = start_ic, buf_ic = 0; ic < end_ic; ic++, buf_ic++)
-                {
-                    int_buf[buf_ic] = reg[ic];
-                }
-
-                register_index = atoi(int_buf);
-            }
+            register_index = stoi(subtoken);
+        }
+        else
+        {
+            register_index = BAD_REGISTER_INDEX;
         }
 
         return register_index;
     }
 
-    WORD AssemblyParser::ParseRegValue(const char* reg_val)
+    WORD AssemblyParser::ParseRegValue(const std::string& token)
     {
-        return 0;
+        WORD reg_index = ParseRegister(token);
+        if (reg_index == BAD_REGISTER_INDEX)
+        {
+            reg_index = stoi(token);
+        }
+        // TODO: support bin/hex/ASCII formats (0xAA, b1010101010101010, #'4)
+        return reg_index;
     }
 }

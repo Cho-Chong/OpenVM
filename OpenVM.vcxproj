@@ -103,6 +103,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)\src\service;$(ProjectDir)\src\model;$(ProjectDir)\src\consts;$(ProjectDir)\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -156,6 +157,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Model\Breakpoint.h" />
+    <ClInclude Include="Src\Model\RegisterSet.h" />
     <ClInclude Include="Src\Service\AssemblyParser.h" />
     <ClInclude Include="Src\Consts\Configuration.h" />
     <ClInclude Include="Src\Service\DebugService.h" />

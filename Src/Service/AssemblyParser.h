@@ -11,20 +11,20 @@ namespace Service
     class AssemblyParser
     {
     public:
-        AssemblyParser(std::vector<Model::Instruction> *inst_set);
+        AssemblyParser(MNEUMONIC_MAP* inst_set);
         ~AssemblyParser();
 
         //TODO: # params getting out of hand
         void Parse(const ASSEMBLY &assembly, Model::Memory &memory, PROGRAM_ASSEMBLY_MAP &program_map);
 
     private:
-        std::vector<Model::Instruction>* InstructionSet;
+        MNEUMONIC_MAP* InstructionSet;
 
-        OPCODE_ENUM ParseInstruction(const char* inst);
+        OPCODE_ENUM ParseInstruction(const std::string& token);
 
-        int ParseRegister(const char* line);
+        WORD ParseRegister(const std::string& token);
 
-        WORD ParseRegValue(const char* line);
+        WORD ParseRegValue(const std::string& token);
     };
 }
 

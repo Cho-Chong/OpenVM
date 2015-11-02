@@ -4,10 +4,9 @@
 
 namespace Model
 {
-    Instruction::Instruction(const char* mnemonic, OPCODE_ENUM byte_code) :
-        ByteCode(byte_code)
+    Instruction::Instruction(OPCODE_ENUM byte_code)
     {
-        strcpy(Mnemonic, mnemonic);
+        
     }
 
     Instruction::~Instruction()
