@@ -20,10 +20,13 @@ Service::MachineService machineService(&machine);
 Service::DebugService debugService;
 
 void Compile(const std::string file);
+void Run();
 
 int main()
 {
     Compile("C:\\Users\\Hero\\Documents\\Visual Studio 2015\\Projects\\OpenVM\\OpenVM\\Src\\test.txt");
+    Run();
+    Run();
     return 0;
 }
 

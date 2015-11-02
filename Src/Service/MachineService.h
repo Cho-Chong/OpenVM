@@ -3,6 +3,7 @@
 
 #include "Machine.h"
 #include "Instruction.h"
+#include <functional>
 
 namespace Service
 {
@@ -20,7 +21,9 @@ namespace Service
 
         WORD Fetch();
         OPCODE_ENUM Decode(const WORD& instruction);
-        void Evaluate(const OPCODE_ENUM& instruction);
+        void Evaluate(const WORD& instruction);
+        void RefetchAndExecute(const WORD& instruction, std::function<void(Model::Register*, WORD)> work);
+        Model::Register* GetRegister(const WORD& instruction);
     };
 }
 

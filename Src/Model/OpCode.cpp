@@ -4,6 +4,8 @@
 
 namespace Model
 {
+
+
     OpCode::OpCode()
     {
 
@@ -17,11 +19,9 @@ namespace Model
     //TODO: handle accumulator
     WORD OpCode::GetOpCode(OPCODE_ENUM base_op_code, int register_index)
     {
-        WORD max_op_code = NUM_OP_CODES * NUM_REGISTERS;
-        WORD min_op_code = OP_CODE_START;
         WORD op_code = (base_op_code * NUM_REGISTERS) + register_index;
 
-        if (op_code <= min_op_code || op_code >= max_op_code)
+        if (op_code <= MIN_OP_CODE || op_code >= MAX_OP_CODE)
         {
             //TODO: throw
         }
@@ -29,9 +29,14 @@ namespace Model
         return op_code;
     }
 
-    OPCODE_ENUM OpCode::GetBaseOpCode(WORD op_code)
+    OPCODE_ENUM OpCode::GetBaseOpCode(const WORD& op_code)
     {
-        return OP_ERROR;
+        return OPCODE_ENUM(op_code / NUM_REGISTERS);
+    }
+
+    int OpCode::GetRegisterOffset(const WORD& instruction)
+    {
+        return instruction % NUM_REGISTERS;
     }
 
     int OpCode::GetNumArguments(OPCODE_ENUM op_code)
