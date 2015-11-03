@@ -1,16 +1,19 @@
 #include "MachineService.h"
 #include "OpCodes.h"
+#include <thread>
+#include <chrono>
 
 namespace Service
 {
-    //TODO: won't work with call, jmp, etc...
-    static std::map<OPCODE_ENUM, std::function<void(Model::Register*, WORD)>> OpWorkMap =
+    //TODO: I don't like the op_function...
+    static std::map<OPCODE_ENUM, MachineService::OP_FUNCTION> OpWorkMap =
     {
-        { OP_MOV, [](auto reg, auto val) { reg->value = val; } },
-        { OP_ADD, [](auto reg, auto val) { reg->value += val; } },
-        { OP_SUB, [](auto reg, auto val) { reg->value -= val; } },
-        { OP_INC, [](auto reg, auto val) { reg->value++; } },
-        { OP_DEC, [](auto reg, auto val) { reg->value--; } }
+        { OP_MOV, std::make_tuple(true, [](auto machine, auto reg, auto val) { reg->value = val; }) },
+        { OP_ADD, std::make_tuple(true, [](auto machine, auto reg, auto val) { reg->value += val; }) },
+        { OP_SUB, std::make_tuple(true, [](auto machine, auto reg, auto val) { reg->value -= val; }) },
+        { OP_JMP, std::make_tuple(true, [](auto machine, auto reg, auto val) { machine->PC.value = val; }) },
+        { OP_INC, std::make_tuple(false, [](auto machine, auto reg, auto val) { reg->value++; }) },
+        { OP_DEC, std::make_tuple(false, [](auto machine, auto reg, auto val) { reg->value--; }) }
     };
 
     MachineService::MachineService(Model::Machine* machine) : Machine(machine)
@@ -36,7 +39,8 @@ namespace Service
             instruction = Fetch();
             Evaluate(instruction);
             Machine->Print();
-        } while (instruction != OP_END);
+            std::this_thread::sleep_for(std::chrono::seconds(1));
+        } while (Model::OpCode::GetBaseOpCode(instruction) != OP_END);
 
     }
 
@@ -55,17 +59,25 @@ namespace Service
     void MachineService::Evaluate(const WORD& instruction)
     {
         auto base_code = Decode(instruction);
+
+        //TODO: oh god, getting so ugly
         if (OpWorkMap.find(base_code) != OpWorkMap.end())
         {
             RefetchAndExecute(instruction, OpWorkMap[base_code]);
         }
     }
 
-    void MachineService::RefetchAndExecute(const WORD& instruction, std::function<void(Model::Register*, WORD)> work)
+    //TODO: design flaw with op codes... need to make unique op code for dual register operation as well
+    void MachineService::RefetchAndExecute(const WORD& instruction, OP_FUNCTION work)
     {
         auto reg = GetRegister(instruction);
-        auto val = Fetch();
-        work(reg, val);
+        WORD val = 0;
+
+        if (std::get<0>(work))
+        {
+            val = Fetch();
+        }
+        std::get<1>(work)(Machine, reg, val);
     }
 
     Model::Register* MachineService::GetRegister(const WORD& instruction)
@@ -81,4 +93,3 @@ namespace Service
         return reg;
     }
 }
-

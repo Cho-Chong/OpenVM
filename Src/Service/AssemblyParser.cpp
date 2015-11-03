@@ -13,6 +13,7 @@ namespace Service
     static const std::string PROGRAM_BEGIN = "BEGIN";
     static const std::string PROGRAM_END = "END";
     static const std::string ROUTINE_RET = "RET";
+    static const char TAG_END = ':';
 
     AssemblyParser::AssemblyParser(MNEUMONIC_MAP *inst_set)
     {
@@ -24,9 +25,11 @@ namespace Service
 
     }
 
+    //TODO: oh god, getting so ugly
     void AssemblyParser::Parse(const ASSEMBLY &assembly, Model::Memory &memory, PROGRAM_ASSEMBLY_MAP &program_map)
     {
         ADDRESS byte_address = memory.GetTopAddress();
+        std::map<std::string, ADDRESS> tag_map;
         unsigned int line_number = 0;
         bool found_begin = false;
         bool found_end = false;
@@ -38,12 +41,12 @@ namespace Service
             if (line == PROGRAM_BEGIN && !found_begin)
             {
                 found_begin = true;
-                memory.SetValue(byte_address++, OP_BEGIN);
+                memory.SetValue(byte_address++, Model::OpCode::GetOpCode(OP_BEGIN, 0));
             }
             else if (line == PROGRAM_END && !found_end)
             {
                 found_end = true;
-                memory.SetValue(byte_address++, OP_END);
+                memory.SetValue(byte_address++, Model::OpCode::GetOpCode(OP_END, 0));
             }
             else if (found_begin && !line.empty())
             {
@@ -60,21 +63,41 @@ namespace Service
                 {
                     continue;
                 }
+                else if (token.back() == TAG_END)
+                {
+                    tag_map[token.substr(0,token.length() - 1)] = byte_address;
+                    memory.SetValue(byte_address++, OP_NOP);
+                }
                 else
                 {
                     program_map[line_number] = byte_address;
 
                     auto base_op_code = ParseInstruction(token);
+
+
                     auto num_arguments = Model::OpCode::GetNumArguments(base_op_code);
 
                     if (num_arguments >= 1)
                     {
                         std::getline(strstream, token, ' ');
-                        //TODO: get rid of comma
-                        auto register_index = ParseRegister(token);
-
+                        int register_index = 0;
                         auto op_code = Model::OpCode::GetOpCode(base_op_code, register_index);
-                        memory.SetValue(byte_address++, op_code);
+
+                        //TODO: get rid of comma
+                        if (base_op_code == OP_JMP)
+                        {
+                            if (tag_map.find(token) != tag_map.end())
+                            {
+                                memory.SetValue(byte_address++, op_code);
+                                memory.SetValue(byte_address++, tag_map[token]);
+                            }
+                        }
+                        else
+                        {
+                            register_index = ParseRegister(token);
+                            op_code = Model::OpCode::GetOpCode(base_op_code, register_index);
+                            memory.SetValue(byte_address++, op_code);
+                        }
 
                         if (num_arguments >= 2)
                         {
@@ -135,12 +158,6 @@ namespace Service
         }
         // TODO: support bin/hex/ASCII formats (0xAA, b1010101010101010
         return reg_index;
-    }
-
-    void AssemblyParser::ParseTags()
-    {
-        // is it a tag?
-        // if its a tag, map this tag to the current byte address
     }
 
     void AssemblyParser::ParseSubroutines()

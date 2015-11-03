@@ -1,7 +1,9 @@
 BEGIN
 #Hello, World!
-HEY:
 MOV R1, 20
+HEY:
 ADD R1, 10
+SUB R1, 5
+INC R3
 JMP HEY
 END

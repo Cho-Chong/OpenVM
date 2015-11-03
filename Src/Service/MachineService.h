@@ -10,6 +10,8 @@ namespace Service
     class MachineService
     {
     public:
+        typedef std::tuple<bool, std::function<void(Model::Machine*, Model::Register*, WORD)>> OP_FUNCTION;
+
         MachineService(Model::Machine* machine);
         ~MachineService();
 
@@ -22,7 +24,7 @@ namespace Service
         WORD Fetch();
         OPCODE_ENUM Decode(const WORD& instruction);
         void Evaluate(const WORD& instruction);
-        void RefetchAndExecute(const WORD& instruction, std::function<void(Model::Register*, WORD)> work);
+        void RefetchAndExecute(const WORD& instruction, OP_FUNCTION work);
         Model::Register* GetRegister(const WORD& instruction);
     };
 }
