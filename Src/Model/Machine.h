@@ -26,6 +26,7 @@ namespace Model
         Register IR;   //instruction register
         Register MAR;  //memory address register
         Register MDR;  //memory data register
+        Register SBUF; //Serial buffer register
         std::stack<ADDRESS> stack;
 
     };

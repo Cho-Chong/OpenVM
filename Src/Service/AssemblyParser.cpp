@@ -25,7 +25,15 @@ namespace Service
 
     }
 
-    //TODO: oh god, getting so ugly
+    //TODO: need to rework
+    //Parse whole line first
+    //Get number of arguments
+    //Get base op code
+    //Get first argument register offset if exists
+    //Get second argument register offset if exists
+    //Calculate op_code
+    //Get first value argument if exists (i.e. RAM address)
+    //Get second value argument if exists (i.e. register or value)
     void AssemblyParser::Parse(const ASSEMBLY &assembly, Model::Memory &memory, PROGRAM_ASSEMBLY_MAP &program_map)
     {
         ADDRESS byte_address = memory.GetTopAddress();

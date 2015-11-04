@@ -14,7 +14,9 @@ static MNEUMONIC_MAP SIMPLE_INSTRUCTION_SET =
     { "ADD", OP_ADD },
     { "SUB", OP_SUB },
     { "JMP", OP_JMP },
-    { "CALL", OP_CALL}
+    { "CALL", OP_CALL},
+    { "SBUF", OP_SBUF},
+    { "RET", OP_RET}
 };
 
 #endif /*SIMPLEMNEUMONIC_H*/

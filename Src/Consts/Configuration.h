@@ -16,7 +16,9 @@ typedef enum
     OP_ADD,     // 5
     OP_SUB,     // 6
     OP_MOV,     // 7
+    OP_RET,
     OP_ACC,
+    OP_SBUF,
     OP_REG,
     OP_BEGIN,
     OP_END,

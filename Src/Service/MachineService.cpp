@@ -1,5 +1,6 @@
 #include "MachineService.h"
 #include "OpCodes.h"
+#include <string>
 #include <thread>
 #include <chrono>
 
@@ -13,7 +14,13 @@ namespace Service
         { OP_SUB, std::make_tuple(true, [](auto machine, auto reg, auto val) { reg->value -= val; }) },
         { OP_JMP, std::make_tuple(true, [](auto machine, auto reg, auto val) { machine->PC.value = val; }) },
         { OP_INC, std::make_tuple(false, [](auto machine, auto reg, auto val) { reg->value++; }) },
-        { OP_DEC, std::make_tuple(false, [](auto machine, auto reg, auto val) { reg->value--; }) }
+        { OP_DEC, std::make_tuple(false, [](auto machine, auto reg, auto val) { reg->value--; }) },
+        { OP_CALL, std::make_tuple(false, [](auto machine, auto reg, auto val) { machine->stack.push(machine->PC.value); }) },
+        { OP_RET, std::make_tuple(false, [](auto machine, auto reg, auto val) {
+                                                                                            machine->PC.value = machine->stack.top();
+                                                                                            machine->stack.pop();
+                                                                                        }) },
+        { OP_SBUF, std::make_tuple(true, [](auto machine, auto reg, auto val) { printf(std::to_string(val).c_str()); }) }
     };
 
     MachineService::MachineService(Model::Machine* machine) : Machine(machine)

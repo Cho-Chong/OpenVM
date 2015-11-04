@@ -51,7 +51,8 @@ namespace Model
             {OP_CALL, 1},    // 4
             {OP_ADD, 2},    // 5
             {OP_SUB, 2},    // 6
-            {OP_MOV, 2}    // 7
+            {OP_MOV, 2},    // 7
+            {OP_SBUF, 1}
         };
 
         std::map<OPCODE_ENUM, int>::const_iterator it = OPCODE_ARGUMENTS_MAP.find(op_code);
