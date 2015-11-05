@@ -145,6 +145,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Src\Model\RegisterSet.cpp" />
     <ClCompile Include="Src\Service\AssemblyParser.cpp" />
     <ClCompile Include="Src\Service\DebugService.cpp" />
     <ClCompile Include="Src\Service\MachineService.cpp" />

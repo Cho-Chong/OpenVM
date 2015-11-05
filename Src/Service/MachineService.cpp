@@ -9,15 +9,15 @@ namespace Service
     //TODO: I don't like the op_function...
     static std::map<OPCODE_ENUM, MachineService::OP_FUNCTION> OpWorkMap =
     {
-        { OP_MOV, std::make_tuple(true, [](auto machine, auto reg, auto val) { reg->value = val; }) },
-        { OP_ADD, std::make_tuple(true, [](auto machine, auto reg, auto val) { reg->value += val; }) },
-        { OP_SUB, std::make_tuple(true, [](auto machine, auto reg, auto val) { reg->value -= val; }) },
-        { OP_JMP, std::make_tuple(true, [](auto machine, auto reg, auto val) { machine->PC.value = val; }) },
-        { OP_INC, std::make_tuple(false, [](auto machine, auto reg, auto val) { reg->value++; }) },
-        { OP_DEC, std::make_tuple(false, [](auto machine, auto reg, auto val) { reg->value--; }) },
-        { OP_CALL, std::make_tuple(false, [](auto machine, auto reg, auto val) { machine->stack.push(machine->PC.value); }) },
+        { OP_MOV, std::make_tuple(true, [](auto machine, auto reg, auto val) { reg->Value = val; }) },
+        { OP_ADD, std::make_tuple(true, [](auto machine, auto reg, auto val) { reg->Value += val; }) },
+        { OP_SUB, std::make_tuple(true, [](auto machine, auto reg, auto val) { reg->Value -= val; }) },
+        { OP_JMP, std::make_tuple(true, [](auto machine, auto reg, auto val) { machine->Registers.GetSpecial(Model::REG_PC)->Value = val; }) },
+        { OP_INC, std::make_tuple(false, [](auto machine, auto reg, auto val) { reg->Value++; }) },
+        { OP_DEC, std::make_tuple(false, [](auto machine, auto reg, auto val) { reg->Value--; }) },
+        { OP_CALL, std::make_tuple(false, [](auto machine, auto reg, auto val) { machine->stack.push(machine->Registers.GetSpecial(Model::REG_PC)->Value); }) },
         { OP_RET, std::make_tuple(false, [](auto machine, auto reg, auto val) {
-                                                                                            machine->PC.value = machine->stack.top();
+                                                                                            machine->Registers.GetSpecial(Model::REG_PC)->Value = machine->stack.top();
                                                                                             machine->stack.pop();
                                                                                         }) },
         { OP_SBUF, std::make_tuple(true, [](auto machine, auto reg, auto val) { printf(std::to_string(val).c_str()); }) }
@@ -53,7 +53,7 @@ namespace Service
 
     WORD MachineService::Fetch()
     {
-        return Machine->Program->GetValue(Machine->PC.value++);
+        return Machine->Program->GetValue(Machine->Registers.GetSpecial(Model::REG_PC)->Value++);
     }
 
     OPCODE_ENUM MachineService::Decode(const WORD& instruction)
@@ -63,6 +63,7 @@ namespace Service
 
     // TODO: extract, abstract and create an ALU and buses (data, control, address)
     // TODO: be able to get values from RAM/data memory
+    // TODO: give work of opcode to a different module
     void MachineService::Evaluate(const WORD& instruction)
     {
         auto base_code = Decode(instruction);
@@ -87,15 +88,11 @@ namespace Service
         std::get<1>(work)(Machine, reg, val);
     }
 
+    //TODO: fix this
     Model::Register* MachineService::GetRegister(const WORD& instruction)
     {
         int register_index = Model::OpCode::GetRegisterOffset(instruction);
-        Model::Register* reg = &Machine->Acc;
-
-        if (register_index > 0)
-        {
-            reg = &Machine->Registers[register_index - 1];
-        }
+        Model::Register* reg = Machine->Registers.GetSpecial(Model::REG_ACC);
 
         return reg;
     }

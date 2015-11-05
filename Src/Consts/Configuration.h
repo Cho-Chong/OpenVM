@@ -17,6 +17,10 @@ typedef enum
     OP_SUB,     // 6
     OP_MOV,     // 7
     OP_RET,
+    OP_OR,
+    OP_AND,
+    OP_XOR,
+    OP_MUL,
     OP_ACC,
     OP_SBUF,
     OP_REG,
@@ -47,7 +51,5 @@ static const int MAX_DATA_SIZE = 0x2000;
 static const ADDRESS CODE_START_ADDRESS = 0x0000;
 
 static const ADDRESS DATA_START_ADDRESS = CODE_START_ADDRESS + MAX_CODE_SIZE;
-
-static const int NUM_REGISTERS = 8;
 
 #endif /*CONFIGURATION_H*/

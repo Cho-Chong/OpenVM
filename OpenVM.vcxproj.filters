@@ -42,6 +42,9 @@
     <ClCompile Include="Src\Service\DebugService.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Model\RegisterSet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Model\Register.h">

@@ -2,7 +2,7 @@
 #define MACHINE_H_
 
 #include "Configuration.h"
-#include "Register.h"
+#include "RegisterSet.h"
 #include "Memory.h"
 #include <stack>
 
@@ -17,18 +17,9 @@ namespace Model
         void Print();
 
         Memory* Program;
-        Memory* Data;
-        //TODO: do registers/accumulators reside in memory or is it special hardware?
-        Register Registers[NUM_REGISTERS];
-        Register Sp;   //stack pointer
-        Register Acc;  //accumulator
-        Register PC;   //program counter
-        Register IR;   //instruction register
-        Register MAR;  //memory address register
-        Register MDR;  //memory data register
-        Register SBUF; //Serial buffer register
+        Memory* Data;  // external RAM
+        RegisterSet Registers;
         std::stack<ADDRESS> stack;
-
     };
 }
 

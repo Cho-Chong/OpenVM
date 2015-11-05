@@ -8,16 +8,21 @@ namespace Model
     class Register
     {
     public:
-        Register()
+        Register(std::string name) : 
+            Value(0), 
+            Name(name)
         {
-            index = 0;
-            value = 0;
         }
 
         ~Register() {}
 
-        unsigned int index;
-        WORD value;
+        void Print()
+        {
+            printf("%s: %d", Name, Value);
+        }
+
+        std::string Name;
+        WORD Value;
     };
 }
 
