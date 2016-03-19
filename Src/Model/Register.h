@@ -18,7 +18,7 @@ namespace Model
 
         void Print()
         {
-            printf("%s: %d", Name, Value);
+            printf("%s: %d\n", Name.c_str(), Value);
         }
 
         std::string Name;

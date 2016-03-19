@@ -1,5 +1,6 @@
 #include "MachineService.h"
 #include "OpCodes.h"
+#include "RegisterSet.h"
 #include <string>
 #include <thread>
 #include <chrono>
@@ -17,9 +18,11 @@ namespace Service
         { OP_DEC, std::make_tuple(false, [](auto machine, auto reg, auto val) { reg->Value--; }) },
         { OP_CALL, std::make_tuple(false, [](auto machine, auto reg, auto val) { machine->stack.push(machine->Registers.GetSpecial(Model::REG_PC)->Value); }) },
         { OP_RET, std::make_tuple(false, [](auto machine, auto reg, auto val) {
-                                                                                            machine->Registers.GetSpecial(Model::REG_PC)->Value = machine->stack.top();
-                                                                                            machine->stack.pop();
-                                                                                        }) },
+        if (machine->stack.size() > 0)
+        {
+            machine->Registers.GetSpecial(Model::REG_PC)->Value = machine->stack.top();
+            machine->stack.pop();
+        }}) },
         { OP_SBUF, std::make_tuple(true, [](auto machine, auto reg, auto val) { printf(std::to_string(val).c_str()); }) }
     };
 
@@ -43,10 +46,9 @@ namespace Service
 
         do
         {
-            instruction = Fetch();
             Evaluate(instruction);
             Machine->Print();
-            std::this_thread::sleep_for(std::chrono::seconds(1));
+            instruction = Fetch();
         } while (Model::OpCode::GetBaseOpCode(instruction) != OP_END);
 
     }
@@ -92,7 +94,8 @@ namespace Service
     Model::Register* MachineService::GetRegister(const WORD& instruction)
     {
         int register_index = Model::OpCode::GetRegisterOffset(instruction);
-        Model::Register* reg = Machine->Registers.GetSpecial(Model::REG_ACC);
+        //Model::Register* reg = Machine->Registers.GetSpecial(Model::REG_ACC);
+        Model::Register* reg = Machine->Registers.GetMem((Model::REG_MEMORY_ENUM)register_index);
 
         return reg;
     }

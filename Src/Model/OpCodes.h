@@ -21,8 +21,6 @@ namespace Model
 
         static int GetNumArguments(OPCODE_ENUM op_code);
     private:
-        static const WORD MAX_OP_CODE = NUM_OP_CODES;
-        static const WORD MIN_OP_CODE = 0x0000;
     };
 }
 
